@@ -1,0 +1,23 @@
+{
+	"version": "1.0",
+	"manifest_version": 3,
+	"description": "AI replies with your personal touch",
+	"name": "Resai",
+	"permissions": ["sidePanel", "activeTab", "tabs"],
+	"side_panel": {
+		"default_path": "index.html"
+	},
+	"action": {
+		"default_title": "Click to open panel"
+	},
+	"background": {
+		"service_worker": "service-worker.js",
+		"type": "module"
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content-script.js"]
+		}
+	]
+}
