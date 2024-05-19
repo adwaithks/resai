@@ -1,5 +1,35 @@
 const getTweetContent = () => {
-	return document.querySelector("[data-testid='tweetText']").textContent;
+	const user = document.querySelector("article").textContent;
+	const tweet = document.querySelector(
+		"[data-testid='tweetText']"
+	).textContent;
+
+	const tweetSlice = tweet.slice(0, 5);
+	const [userPortion, tweetPortion] = user.split(tweetSlice);
+	const [username, handle] = userPortion.split("@");
+
+	console.log({ username, handle });
+	console.log({ userPortion, tweetPortion });
+
+	const allTweets = document.querySelectorAll("article");
+	let completeTweet = "";
+	let replies = "";
+	Array.from(allTweets).forEach((tweet) => {
+		if (
+			tweet.textContent.includes(username) &&
+			tweet.textContent.includes(`@${handle}`)
+		) {
+			completeTweet += tweet.querySelector(
+				"[data-testid='tweetText']"
+			).textContent;
+		} else {
+			replies +=
+				tweet.querySelector("[data-testid='tweetText']").textContent +
+				"\n-----\n";
+		}
+	});
+	console.log({ completeTweet });
+	return { replies, completeTweet };
 };
 
 // const getReplyBtn = () => {
@@ -27,8 +57,8 @@ const getTweetContent = () => {
 // };
 const insertAiGenerateBtn = async () => {
 	console.log("inside");
-	const tweetContent = getTweetContent();
-	console.log(tweetContent);
+	const { completeTweet, replies } = getTweetContent();
+	console.log({ completeTweet, replies });
 
 	const aiGenerateButton = document.createElement("button");
 	aiGenerateButton.textContent = "generate";
@@ -42,7 +72,8 @@ const insertAiGenerateBtn = async () => {
 						"Content-Type": "application/json",
 					},
 					body: JSON.stringify({
-						post_content: tweetContent,
+						post_content: completeTweet,
+						replies: replies,
 						platform: "twitter",
 					}),
 				}
@@ -67,6 +98,6 @@ const insertAiGenerateBtn = async () => {
 
 window.onload = () => {
 	setTimeout(() => {
-		insertAiGenerateBtn;
-	}, 1000);
+		insertAiGenerateBtn();
+	}, 3000);
 };
