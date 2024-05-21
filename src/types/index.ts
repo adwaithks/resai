@@ -25,3 +25,17 @@ export interface IKnowledge {
 	name: string;
 	createdOn: string;
 }
+
+export interface IUserDTO {
+	id: number;
+	name: string;
+	email: string;
+	image_url: string;
+}
+
+export interface IUser {
+	id: number;
+	name: string;
+	email: string;
+	imageUrl: string;
+}

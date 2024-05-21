@@ -3,7 +3,14 @@
 	"manifest_version": 3,
 	"description": "AI replies with your personal touch",
 	"name": "Resai",
-	"permissions": ["sidePanel", "activeTab", "tabs"],
+	"permissions": [
+		"sidePanel",
+		"activeTab",
+		"tabs",
+		"webNavigation",
+		"scripting"
+	],
+	"host_permissions": ["https://x.com/*"],
 	"side_panel": {
 		"default_path": "index.html"
 	},

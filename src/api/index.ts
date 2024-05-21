@@ -1,5 +1,12 @@
 import axiosInstance from "../axiosInstance";
-import { IKnowledge, IKnowledgeDTO, IReply, IReplyDTO } from "../types";
+import {
+	IKnowledge,
+	IKnowledgeDTO,
+	IReply,
+	IReplyDTO,
+	IUser,
+	IUserDTO,
+} from "../types";
 
 export const generateAiReplyApi = async ({
 	postContent,
@@ -10,6 +17,16 @@ export const generateAiReplyApi = async ({
 		post_content: postContent,
 	});
 	return data;
+};
+
+export const getMyProfileApi = async () => {
+	const { data } = await axiosInstance.get<{ data: IUserDTO }>("/auth/me");
+	return {
+		id: data.data.id,
+		name: data.data.name,
+		email: data.data.email,
+		imageUrl: data.data.image_url,
+	} as IUser;
 };
 
 export const getMyPreviousRepliesApi = async () => {
